@@ -1,0 +1,18 @@
+- hosts: local
+  user: ubuntu
+  gather_facts: yes
+  tasks:
+    - name: Docker compose down
+      community.general.docker_compose:
+        project_src: docker-compose.yml
+        state: absent
+      register: output
+    - ansible.builtin.debug:
+        var: output      
+    - name: Docker compose up
+      community.general.docker_compose:
+        project_src: docker-compose.yml
+        build: no
+      register: output
+    - ansible.builtin.debug:
+        var: output
